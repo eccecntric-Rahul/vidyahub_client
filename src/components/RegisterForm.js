@@ -1,33 +1,41 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import { toast } from "react-toastify";
 import newRegister from "../action/Register"
-// import { NewRegister } from "../Route/RegisterRoute";
-// import axios  from "axios";
-// const APP_API="http://localhost:8000/api";
+import { getCourse } from "../Route/SearchRoute";
 
 const RegisterForm =() =>{
-    
+    var courseResponse;
+    // var options;
+    const [items,setItems]=useState();
+    const [loading,setLoading]=useState(true);
     const history = useHistory();
-
+    useEffect( ()=>{
+        async function getCourses(){
+         courseResponse= await getCourse();
+        console.log(courseResponse);
+        setItems(courseResponse.data.map((i)=><option key={i._id} value={i.name}>{i.name}</option>) );
+          setLoading(false);  
+        } getCourses();
+    },[]);
     const [values,setValues]=useState({
         name: "",
         classNum: "",
         age: "",
         fatherName: "",
-        fee: "",
-        description: "",
-        day: "",
-        registerTime: "",
         courseName: "",
         phoneNo: "",
         emailAdd: "",
-        address: "",        
-
+        school: "",
+        modeOfEnquiry: "",
+        branch: "",
+        refferedBy: "",
+        leadGeneratedBy: "",
+        leadFollowedUpBy: "",
     });
 
     
-    const {name,age,fatherName,classNum,fee,courseName,description,day,registerTime,phoneNo,emailAdd,address} = values;
+    const {name,age,fatherName,classNum,courseName,phoneNo,emailAdd,school,modeOfEnquiry,branch,refferedBy,leadGeneratedBy,leadFollowedUpBy} = values;
     const handleSubmit = async (e)=>{
         e.preventDefault();
         console.log(e);
@@ -36,11 +44,11 @@ const RegisterForm =() =>{
             console.log(res.data);
             toast.success("Student Registered");
             setTimeout(()=>{
-             window.location.reload(false);
+             window.location.reload();
 
             },2000)
         }catch(err)
-        {
+        {   toast.error("Pls fill all the required fields");
             console.log(err);
         }
             // const res = NewRegister(formData);
@@ -56,19 +64,25 @@ const RegisterForm =() =>{
        <form onSubmit={handleSubmit} >
            <input type="text" name="name" className="form-control m-1" placeholder="Name" value={name} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
            <input type="text" placeholder="Father's Name" className="form-control m-1" name="fatherName" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} value={fatherName}></input>
-           <input type="text" name="classNum" className="form-control m-1" placeholder="Class" value={classNum} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <input type="number" name="classNum" className="form-control m-1" placeholder="Class" value={classNum} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
             <input type="number" name="age" className="form-control m-1" placeholder="Age" value={age} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
-           <input type="text" placeholder="Course Name" className="form-control m-1" name="courseName" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} value={courseName}></input>
-            <textarea className="form-control m-1" placeholder="Description" cols="5" row="2" value={description} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} name="description" ></textarea> 
-            <select className="form-control m-1" name="fee" value={fee} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}>
-                <option className="form-control" value='unpaid' >Unpaid</option>
-                <option className="form-control" value='paid'>Paid</option>
-            </select>
-           <input type="text" placeholder="Phone No" className="form-control m-1" value={phoneNo} name="phoneNo" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} />
+           <select className="form-control m-1" disabled={loading} name="courseName" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} value={courseName} >
+            {/* <option >english</option> */}
+           {items}
+           </select>
+            <input type="text" placeholder="Phone No" className="form-control m-1" value={phoneNo} name="phoneNo" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} />
            <input type="email" placeholder="email" className="form-control m-1" value={emailAdd} name="emailAdd" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} />
-           <input type="text" placeholder="address" className="form-control m-1" value={address} name="address" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} />           
-           <input type="date" placeholder="Date" className="form-control m-1" name="day" value={day} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
-           <input type="time" placeholder="time" className="form-control m-1" name="registerTime" value={registerTime} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <input type="text" placeholder="School" className="form-control m-1" name="school" value={school} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <select className="form-control m-1"  name="modeOfEnquiry" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} value={modeOfEnquiry} >
+            <option value="online" >Online</option>
+            <option selected value="branch visit" >Branch Visit</option>
+            <option value="inbound call" >Inbound Call</option>
+            <option value="other" >Other</option>
+           </select>
+           <input type="text" placeholder="Reffered By" className="form-control m-1" name="refferedBy" value={refferedBy} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <input type="text" placeholder="Branch" className="form-control m-1" name="branch" value={branch} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <input type="text" placeholder="Lead Generated By" className="form-control m-1" name="leadGeneratedBy" value={leadGeneratedBy} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
+           <input type="text" placeholder="Lead Followed Up By" className="form-control m-1" name="leadFollowedUpBy" value={leadFollowedUpBy} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>
             <button type="submit" className="btn btn-success form-control m-1">Register</button>             
        </form>
        </div>

@@ -6,3 +6,8 @@ export const NewRegister = async (formData,req,res) => {
     console.log(formData);
    return await axios.post(`${APP_API}/new-register`,formData);
 }
+
+
+export const Admission = async (formData)=>{
+    return await axios.post(`${APP_API}/admission`,formData);
+}
