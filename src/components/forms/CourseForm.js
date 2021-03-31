@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CourseRoute } from "../Route/CourseRoute";
+import { CourseRoute } from "../../Route/CourseRoute";
 import {toast} from "react-toastify";
 import { useSelector } from "react-redux";
 
@@ -13,8 +13,14 @@ const CourseForm=()=>{
         from: "",
         classTo: "",
         classFrom: "",
+        subject1: '',
+        subject2: "",
+        subject3: '',
+        
     });
-    const {name,to,from,classTo,classFrom}=values;
+
+    const {name,to,from,classTo,classFrom,subject1,subject2,subject3}=values;
+    
     
     const handleSubmit=async (e)=>{
         e.preventDefault();
@@ -24,6 +30,10 @@ const CourseForm=()=>{
         formData.append("from",from);
         formData.append("classTo",classTo);
         formData.append("classFrom",classFrom);
+        formData.append("subject1",subject1);
+        formData.append("subject2",subject2);
+        formData.append("subject3",subject3);
+
         try{const res= await CourseRoute(formData,auth.token);
         if(res) toast.success("Course Added");
         }catch(err){
@@ -47,7 +57,24 @@ const CourseForm=()=>{
         
         <input type="time" name="classTo" className="form-control m-1" value={classTo} onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}/>
         
+        <div className="form-control m-1">
+            <input name="subject1" type="checkbox" value="Physics"  onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}/>Physics
+        </div>
+        
+        <div className="form-control m-1">
+        <input name="subject2" type="checkbox" value="chemistry"   onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})} />Chemistry
+        </div>
+        
+        
+        <div className="form-control m-1">
+            <input type="radio" name="subject3" value="math"  onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}></input>Math 
+            <input type="radio" name="subject3" value="bio" onChange={(e)=>setValues({...values,[e.target.name]:e.target.value})}/> Biology
+             
+        </div>
+        
         <button className="btn btn-primary form-control m-1" type="submit">+</button>
+    
+    
     </form>
 }
 

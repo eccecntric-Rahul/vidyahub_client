@@ -1,4 +1,4 @@
-import UpdateForm from "../components/UpdateForm";
+import UpdateForm from "../components/forms/UpdateForm";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";

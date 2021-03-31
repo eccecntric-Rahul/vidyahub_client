@@ -1,4 +1,4 @@
-import AdmissionForm from "../components/AdmissionForm";
+import AdmissionForm from "../components/forms/AdmissionForm";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

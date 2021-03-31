@@ -1,15 +1,15 @@
-import CourseForm from "../components/forms/CourseForm"
+import EmployeeForm from "../components/forms/EmployeeForm";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddCourse=()=>{
+const Employee=()=>{
     return <>
-        <h1 className='container-fluid p-5 text-center'>Add Course</h1>
+        <h1 className='container-fluid p-5 text-center'>Add Employee</h1>
         <ToastContainer></ToastContainer>
         <div className='container-fluid'>
-            <CourseForm />
+            <EmployeeForm />
         </div>
     </>
 }
 
-export default AddCourse;
+export default Employee;

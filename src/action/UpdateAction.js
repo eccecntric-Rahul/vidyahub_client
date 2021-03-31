@@ -15,6 +15,10 @@ const UpdateAction=(values,URL)=>{
     formData.append("leadGeneratedBy",values.leadGeneratedBy);
     formData.append('leadFollowedUpBy',values.leadFollowedUpBy);
     formData.append('branch',values.branch);
+    formData.append('enquiryType',values.enquiryType);
+    formData.append('status',values.status);
+    formData.append('description',values.description);
+    formData.append('interest',values.interest);
 
 
     console.log(formData) ;

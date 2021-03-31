@@ -1,10 +1,11 @@
 import React from "react";
-import RegisterForm from "../components/forms/RegisterForm";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-const Register = () =>{
+import  EnrolmentForm  from "../components/forms/EnrolmentForm";
+
+const Enrollment = () =>{
     const auth= useSelector((state)=>({...state}));
     return (<>
     <div className="d-flex bg-light p-2 align-items-center justify-content-between">
@@ -14,12 +15,12 @@ const Register = () =>{
         {auth&&auth.token?<Link to="/dashboard">Dashboard</Link>: <Link to="/signup">Sign Up</Link>}
     </div>
     <div className="container-fluid text-center p-3 h1 bg-secondary">
-    Register Form
+    Enrollment Form
     </div>
     <ToastContainer />
-    <RegisterForm />
+    <EnrolmentForm />
     </>);
   
 }
 
-export default Register;
+export default Enrollment;

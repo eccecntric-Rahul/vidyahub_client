@@ -6,6 +6,8 @@ export const UpdateRoute = async (formData,URL) => {
    return await axios.put(`${APP_API}/update/${URL}`,formData);
 }
 
-export const UpdateFee = async(formData)=>{
-      return await axios.put(`${APP_API}/update-fee`,formData);
+export const UpdateFee = async(formData,token)=>{
+      return await axios.put(`${APP_API}/update-fee`,formData,{headers:{
+            authorization: `Bearer ${token}`,
+         } });
 }
